@@ -47,6 +47,7 @@ public class Game {
 
                     break;
                 case "\\showHand":
+                    System.out.println("your hand will be programmed next milestone");
 
                     break;
                 case "\\showScore":
