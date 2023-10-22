@@ -186,6 +186,11 @@ public class Game {
                 System.exit(0);
             }
         }
+        for (Player player : players) {
+            if (player.isOut() ){
+                player.setOut(false);
+            }
+        }
 
 
         // Reset the deck
