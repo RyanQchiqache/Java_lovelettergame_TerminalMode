@@ -25,19 +25,28 @@ public class Game {
         numCardsInDeck = deck.size();
 
     }
-
     /**
      * Starts the Love Letter game, allowing players to set up their names and dealing cards to them.
      */
     public void start() {
         System.out.print("Enter number of players (2-4): ");
-        numPlayers = scanner.nextInt(); // read the number of players
+        numPlayers = scanner.nextInt();// read the number of players
+        while (numPlayers < 2 || numPlayers > 4) {
+            System.out.println("Please enter a valid number of players (from 2 to 4).");
+            System.out.print("Enter number of players (from 2 to 4): ");
+            numPlayers = scanner.nextInt();
+        }
         scanner.nextLine(); // consume newline
         int playerID = 1;
 
         for (int i = 0; i < numPlayers; i++) {
             System.out.print("Enter name for Player " + (i + 1) + ": ");
             String playerName = scanner.nextLine();
+            while (playerName.length() > 21) {
+                System.out.println("Player name should be up to 16 characters. Please try again.");
+                System.out.print("Enter name for Player " + (i + 1) + " (up to 21 characters): ");
+                playerName = scanner.nextLine();
+            }
             players.add(new Player(playerName, playerID));
             playerID++;
         }
@@ -150,7 +159,7 @@ public class Game {
         Card playedCard;
         Card newCard = deck.draw();
         System.out.println(" Which card do you want to discard ? - Hand ( True ) :" + currentPlayer.getHand().getName()
-                +" " +" or the new Card ( False ) : " + newCard.getName() + " currPlayer : "+ currentPlayer.getName()+ currentPlayer.getPlayerID());
+                +" " +" or the new Card ( False ) : " + newCard.getName() + " currPlayer : "+ currentPlayer.getName()+ " "+ currentPlayer.getPlayerID());
         Boolean temp = scanner.nextBoolean();
         if (temp) {
            playedCard = currentPlayer.playCard(currentPlayer.getHand(), scanner, players);
@@ -178,7 +187,7 @@ public class Game {
     public void showScore() {
         System.out.println("Score:");
         for (Player player : players) {
-            System.out.println(player.getName() + ": " + player.getScore());
+            System.out.println(player.getName()+"" + currentPlayer.getPlayerID() + ": " + player.getScore());
         }
     }
 
@@ -224,7 +233,7 @@ public class Game {
                 break;
         }
 
-// checks if any player has reached the required number of tokens to win
+        // checks if any player has reached the required number of tokens to win
         for (Player player : players) {
             if (player.getScore() >= tokensToWin) {
                 System.out.println(player.getName() + " wins the game!");
