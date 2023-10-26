@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * The Game class represents the Love Letter game and manages game logic.
+ */
 public class Game {
 
     private int numPlayers;
@@ -24,31 +26,41 @@ public class Game {
 
     }
 
-    // method to start the game
+    /**
+     * Starts the Love Letter game, allowing players to set up their names and dealing cards to them.
+     */
     public void start() {
         System.out.print("Enter number of players (2-4): ");
         numPlayers = scanner.nextInt(); // read the number of players
         scanner.nextLine(); // consume newline
+        int playerID = 1;
 
         for (int i = 0; i < numPlayers; i++) {
             System.out.print("Enter name for Player " + (i + 1) + ": ");
             String playerName = scanner.nextLine();
-            players.add(new Player(playerName)); // creates a new player object with the entered name
+            players.add(new Player(playerName, playerID));
+            playerID++;
         }
+
+        explainHowToPlay();
         System.out.println("Dealing cards...");
         dealCards();
         currentPlayer = players.get(0);
         System.out.println("Enter \\help for a list of commands.");
     }
 
-    // method to deal cards to players
+    /**
+     * Deals cards to the players in the game.
+     */
     private void dealCards() {
         deck.shuffle();
         for (Player player : players) {
                 player.setHand(deck.draw());
              }
     }
-
+    /**
+     * Waits for user commands and processes them.
+     */
     private void waitForCommand() {
         while (true) {
             System.out.print("> ");
@@ -76,7 +88,11 @@ public class Game {
                     System.exit(0);
                     break;
                 case "\\showPlayer" :
-                    System.out.println("the current player is :" + currentPlayer.getName());
+                   /* System.out.println("the current player is :" + currentPlayer.getName());*/
+                    System.out.println("List of players:");
+                    for (Player player : players) {
+                        System.out.println("Player ID: " + player.getPlayerID() + ", Name: " + player.getName());
+                    }
                     break;
                 default:
                     System.out.println("Unknown command. Enter \\help for a list of commands.");
@@ -85,6 +101,29 @@ public class Game {
             }
         }
     }
+    /**
+     * Prints a quick explanation of how the game is played.
+     */
+
+    private void explainHowToPlay() {
+        // Define ANSI escape codes for text effects
+        String reset = "\u001B[0m"; // Reset text formatting
+        String bold = "\u001B[1m"; // Bold text
+        String green = "\u001B[32m"; // Green text
+
+        System.out.println(green + "Welcome to Love Letter! Here's how to play:" + reset);
+        System.out.println(bold + "1. The goal is to collect tokens by winning rounds." + reset);
+        System.out.println(bold + "2. Each round, you'll have a card in your hand." + reset);
+        System.out.println(bold + "3. Use the \\playTurn command to play a card and try to eliminate other players." + reset);
+        System.out.println(bold + "4. The player with the highest card at the end of a round wins the token for that round." + reset);
+        System.out.println(bold + "5. The first player to collect enough tokens wins the game." + reset);
+        System.out.println(bold + "6. Card hierarchy: Princess > Countess > King > Prince > Handmaid > Baron > Priest > Guard" + reset);
+        System.out.println(bold + "7. Enjoy the game and have fun!" + reset);
+    }
+
+    /**
+     * Prints a list of available commands for player for help.
+     */
 
     private void printHelp() {
         System.out.println("List of commands:");
@@ -96,6 +135,11 @@ public class Game {
         System.out.println("\\showPlayer - Show the current player." );
         System.out.println("\\quit - Quit the game.");
     }
+    /**
+     * Plays a turn in the game, allowing the current player to choose which card to play.
+     *
+     * @param scanner A Scanner object for user input.
+     */
 
     private void playTurn(Scanner scanner) {
         // check if round is over
@@ -106,7 +150,7 @@ public class Game {
         Card playedCard;
         Card newCard = deck.draw();
         System.out.println(" Which card do you want to discard ? - Hand ( True ) :" + currentPlayer.getHand().getName()
-                +" " +" or the new Card ( False ) : " + newCard.getName() + " currPlayer : "+ currentPlayer.getName());
+                +" " +" or the new Card ( False ) : " + newCard.getName() + " currPlayer : "+ currentPlayer.getName()+ currentPlayer.getPlayerID());
         Boolean temp = scanner.nextBoolean();
         if (temp) {
            playedCard = currentPlayer.playCard(currentPlayer.getHand(), scanner, players);
@@ -128,9 +172,9 @@ public class Game {
             endRound();
         }
     }
-
-
-
+    /**
+     * Displays the scores of all players in the game.
+     */
     public void showScore() {
         System.out.println("Score:");
         for (Player player : players) {
@@ -138,7 +182,9 @@ public class Game {
         }
     }
 
-    // method to end the current round
+    /**
+     * Ends the current round and determines the round winner.
+     */
 
     private void endRound() {
         // Find player with the highest hierarchy card
@@ -196,9 +242,12 @@ public class Game {
         // Reset the deck
         deck = new Deck();
     }
-
-
-     public static void main(String[] args) {
+    /**
+     * Main method to start the Love Letter game.
+     *
+     * @param args Command-line arguments (not used).
+     */
+    public static void main(String[] args) {
         Game game = new Game();
         game.waitForCommand();
 

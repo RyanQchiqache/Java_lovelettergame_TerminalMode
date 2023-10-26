@@ -2,6 +2,10 @@ package com.lovelettergame;
 
 import java.util.List;
 import java.util.Scanner;
+/**
+ * The Handmaid class represents a Handmaid card in the Love Letter game.
+ * When a player plays this card, they become immune to all effects until their next turn.
+ */
 
 public class Handmaid extends Card {
     // Constructor for Handmaid card
@@ -9,7 +13,14 @@ public class Handmaid extends Card {
         super("Handmaid", 4);
     }
 
-    // The player who plays this card is immune to all effects until their next turn.
+    /**
+     * The effect of playing the Handmaid card. The player who plays this card becomes immune to all effects until their next turn.
+     * If all other players are also protected, the active player must choose themselves for the effect of a card if possible.
+     *
+     * @param currentPlayer The current player who plays the Handmaid card.
+     * @param allPlayers   A list of all players in the game.
+     * @param scanner      A Scanner object for user input.
+     */
     @Override
     public void effect(Player currentPlayer, List<Player> allPlayers, Scanner scanner) {
         currentPlayer.setProtectedC(true);

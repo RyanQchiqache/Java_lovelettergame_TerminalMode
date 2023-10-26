@@ -3,14 +3,26 @@ package com.lovelettergame;
 import java.util.List;
 import java.util.Scanner;
 
+
+/**
+ * The Baron class represents a Baron card in the Love Letter game.
+ * This card allows a player to compare their card with another player's card,
+ * and the player with the lower-value card is eliminated from the round.
+ */
+
 public class Baron extends Card {
     // Constructor for Baron card
     public Baron() {
         super("Baron", 3);
 
     }
-
-    // Compare your hand with another player's hand. The player with the lower-value card is out of the round.
+    /**
+     * Compare your hand with another player's hand. The player with the lower-value card is out of the round.
+     *
+     * @param currentPlayer The current player who plays the Baron card.
+     * @param allPlayers   A list of all players in the game.
+     * @param scanner      A Scanner object for user input.
+     */
     @Override
     public void effect(Player currentPlayer, List<Player> allPlayers, Scanner scanner) {
         System.out.println("Which player would you like to compare hands with? (Enter a number 1-" + allPlayers.size() + ")");

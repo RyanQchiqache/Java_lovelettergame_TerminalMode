@@ -2,14 +2,25 @@ package com.lovelettergame;
 
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * The Guard class represents a Guard card in the Love Letter game.
+ * Players can use this card to guess another player's card. If they guess correctly, the targeted player is out of the round.
+ */
 public class Guard extends Card {
     // Constructor for Guard card
     public Guard() {
         super("Guard", 1);
     }
 
-    // Guess a player's card. If you are correct, that player is out of the round.
+
+    /**
+     * The effect of playing the Guard card. Players can guess another player's card. If the guess is correct, the targeted
+     * player is eliminated from the round. If the guess is incorrect, nothing happens.
+     *
+     * @param currentPlayer The current player who plays the Guard card.
+     * @param allPlayers   A list of all players in the game.
+     * @param scanner      A Scanner object for user input.
+     */
     @Override
     public  void effect(Player currentPlayer, List<Player> allPlayers, Scanner scanner) {
         System.out.println("Which player would you like to guess? (Enter a number 1-" + allPlayers.size() + ")");
