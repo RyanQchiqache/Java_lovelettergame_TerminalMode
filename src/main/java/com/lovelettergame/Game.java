@@ -29,15 +29,22 @@ public class Game {
      * Starts the Love Letter game, allowing players to set up their names and dealing cards to them.
      */
     public void start() {
-        System.out.print("Enter number of players (2-4): ");
-        numPlayers = scanner.nextInt();// read the number of players
-        while (numPlayers < 2 || numPlayers > 4) {
-            System.out.println("Please enter a valid number of players (from 2 to 4).");
-            System.out.print("Enter number of players (from 2 to 4): ");
-            numPlayers = scanner.nextInt();
-        }
-        scanner.nextLine(); // consume newline
         int playerID = 1;
+        while (true) {
+            System.out.print("Enter number of players (from 2 to 4 ) : ");
+            String input = scanner.nextLine();
+
+            try {
+                numPlayers = Integer.parseInt(input);
+                if (numPlayers >= 2 && numPlayers <= 4) {
+                    break;
+                } else {
+                    System.out.println("Please enter a valid number of players (from 2 to 4).");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number.");
+            }
+        }
 
         for (int i = 0; i < numPlayers; i++) {
             System.out.print("Enter name for Player " + (i + 1) + ": ");
@@ -85,10 +92,7 @@ public class Game {
                     playTurn(scanner);
                     break;
                 case "\\showHand":
-                    for (Player player : players) {
-                        System.out.println("The player " + player.getName() + " hand is :  " + player.getHand().getName()
-                                + " Out of the Round : " + player.isOut());
-                    }
+                    showHand(currentPlayer);
                     break;
                 case "\\showScore":
                     showScore();
@@ -250,6 +254,11 @@ public class Game {
 
         // Reset the deck
         deck = new Deck();
+    }
+    public void showHand(Player currentPlayer) {
+        for (Player player : players) {
+            System.out.println("The player " + player.getHand() + " hand is :  " + player.getHand().getName());
+        }
     }
     /**
      * Main method to start the Love Letter game.
