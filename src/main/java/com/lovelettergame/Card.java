@@ -1,5 +1,7 @@
 package com.lovelettergame;
 
+import com.lovelettergame.cards.*;
+
 import java.util.List;
 import java.util.Scanner;
 /**

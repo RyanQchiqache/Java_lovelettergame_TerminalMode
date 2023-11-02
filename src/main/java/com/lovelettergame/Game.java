@@ -124,6 +124,9 @@ public class Game {
         String bold = "\u001B[1m"; // Bold text
         String green = "\u001B[32m"; // Green text
 
+        System.out.println("\n------------------------------------------------------------------------------------------");
+        System.out.println("|                                      HOW TO PLAY                                          |");
+        System.out.println("--------------------------------------------------------------------------------------------");
         System.out.println(green + "Welcome to Love Letter! Here's how to play:" + reset);
         System.out.println(bold + "1. The goal is to collect tokens by winning rounds." + reset);
         System.out.println(bold + "2. Each round, you'll have a card in your hand." + reset);
@@ -132,6 +135,7 @@ public class Game {
         System.out.println(bold + "5. The first player to collect enough tokens wins the game." + reset);
         System.out.println(bold + "6. Card hierarchy: Princess > Countess > King > Prince > Handmaid > Baron > Priest > Guard" + reset);
         System.out.println(bold + "7. Enjoy the game and have fun!" + reset);
+        System.out.println("-------------------------------------------------------------------------------------------\n");
     }
 
     /**
@@ -162,8 +166,15 @@ public class Game {
         }
         Card playedCard;
         Card newCard = deck.draw();
-        System.out.println(" Which card do you want to discard ? - Hand ( True ) :" + currentPlayer.getHand().getName()
-                +" " +" or the new Card ( False ) : " + newCard.getName() + " currPlayer : "+ currentPlayer.getName()+ " "+ currentPlayer.getPlayerID());
+        System.out.println("\n-------------------------------- ");
+        System.out.println("|          LOVE LETTER GAME       |");
+        System.out.println("-----------------------------------");
+        System.out.println("Which card do you want to discard?");
+        System.out.println("- Hand (enter True): " + currentPlayer.getHand().getName());
+        System.out.println("- New Card (enter False): " + newCard.getName());
+        System.out.println("Current Player: " + currentPlayer.getName() + " (" + currentPlayer.getPlayerID() + ")");
+        System.out.println("-----------------------------------\n");
+
         Boolean temp = scanner.nextBoolean();
         if (temp) {
            playedCard = currentPlayer.playCard(currentPlayer.getHand(), scanner, players);
@@ -172,8 +183,8 @@ public class Game {
         } else {
             playedCard = currentPlayer.playCard(newCard, scanner, players);
         }
-
         discardPile.add(playedCard);
+
         int currentPlayerIndex = players.indexOf(currentPlayer);
         do {
             currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
