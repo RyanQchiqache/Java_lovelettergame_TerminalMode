@@ -92,7 +92,7 @@ public class Game {
                     playTurn(scanner);
                     break;
                 case "\\showHand":
-                    showHand(currentPlayer);
+                    showHand();
                     break;
                 case "\\showScore":
                     showScore();
@@ -174,8 +174,6 @@ public class Game {
         }
 
         discardPile.add(playedCard);
-
-        // move to next player
         int currentPlayerIndex = players.indexOf(currentPlayer);
         do {
             currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
@@ -218,15 +216,8 @@ public class Game {
             highestPlayer.addToScore(1);
             System.out.println(highestPlayer.getName() + " had the highest card hierarchy and gets a score of 1!");
         }
-
-
-        // Print "Round over. Scores:" to the console
         System.out.println("Round over. Scores:");
-
-        // Call the "showScore" method to display the updated scores
         showScore();
-
-        // determines the number of tokens required to win based on the number of players
         int tokensToWin = 7;
         switch(players.size()) {
             case 3:
@@ -236,12 +227,9 @@ public class Game {
                 tokensToWin = 4;
                 break;
         }
-
-        // checks if any player has reached the required number of tokens to win
         for (Player player : players) {
             if (player.getScore() >= tokensToWin) {
                 System.out.println(player.getName() + " wins the game!");
-                // add any additional logic here for what happens when the game is won
                 System.exit(0);
             }
         }
@@ -250,15 +238,10 @@ public class Game {
                 player.setOut(false);
             }
         }
-
-
-        // Reset the deck
         deck = new Deck();
     }
-    public void showHand(Player currentPlayer) {
-        for (Player player : players) {
-            System.out.println("The player " + player.getHand() + " hand is :  " + player.getHand().getName());
-        }
+    public void showHand() {
+        System.out.println("The player " + currentPlayer.getHand() + " hand is :  " + currentPlayer.getHand().getName());
     }
     /**
      * Main method to start the Love Letter game.
