@@ -250,7 +250,16 @@ public class Game {
             }
         }
         deck = new Deck();
+        resetPlayerHands();
     }
+    private void resetPlayerHands() {
+        for (Player player : players) {
+            if (!player.isOut()) {
+                player.setHand(deck.draw());
+            }
+        }
+    }
+
     public void showHand() {
         System.out.println("The player " + currentPlayer.getHand() + " hand is :  " + currentPlayer.getHand().getName());
     }
