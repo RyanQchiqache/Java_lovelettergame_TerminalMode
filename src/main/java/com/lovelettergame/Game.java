@@ -30,6 +30,10 @@ public class Game {
      */
     public void start() {
         int playerID = 1;
+        System.out.println("--------------------------------------------------");
+        System.out.println("|              LOVE LETTER GAME                   |");
+        System.out.println("--------------------------------------------------");
+
         while (true) {
             System.out.print("Enter number of players (from 2 to 4 ) : ");
             String input = scanner.nextLine();
@@ -57,6 +61,7 @@ public class Game {
             players.add(new Player(playerName, playerID));
             playerID++;
         }
+        System.out.println("---------------------------------------------------\n");
 
         explainHowToPlay();
         System.out.println("Dealing cards...");
@@ -124,9 +129,9 @@ public class Game {
         String bold = "\u001B[1m"; // Bold text
         String green = "\u001B[32m"; // Green text
 
-        System.out.println("\n------------------------------------------------------------------------------------------");
+        System.out.println("\n--------------------------------------------------------------------------------------------");
         System.out.println("|                                      HOW TO PLAY                                          |");
-        System.out.println("--------------------------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------");
         System.out.println(green + "Welcome to Love Letter! Here's how to play:" + reset);
         System.out.println(bold + "1. The goal is to collect tokens by winning rounds." + reset);
         System.out.println(bold + "2. Each round, you'll have a card in your hand." + reset);
@@ -135,7 +140,7 @@ public class Game {
         System.out.println(bold + "5. The first player to collect enough tokens wins the game." + reset);
         System.out.println(bold + "6. Card hierarchy: Princess > Countess > King > Prince > Handmaid > Baron > Priest > Guard" + reset);
         System.out.println(bold + "7. Enjoy the game and have fun!" + reset);
-        System.out.println("-------------------------------------------------------------------------------------------\n");
+        System.out.println("---------------------------------------------------------------------------------------------\n");
     }
 
     /**
@@ -168,6 +173,7 @@ public class Game {
         Card newCard = deck.draw();
         System.out.println("\n-------------------------------- ");
         System.out.println("|          LOVE LETTER GAME       |");
+        System.out.println("|          Play Turn mode         |");
         System.out.println("-----------------------------------");
         System.out.println("Which card do you want to discard?");
         System.out.println("- Hand (enter True): " + currentPlayer.getHand().getName());
@@ -222,13 +228,21 @@ public class Game {
             }
         }
 
-        // Add 1 to the score of the player with the highest hierarchy card
         if (highestPlayer != null) {
             highestPlayer.addToScore(1);
+            System.out.println("\n-------------------------------------------------------------------");
+            System.out.println("|                       ROUND RESULTS                               |");
+            System.out.println("---------------------------------------------------------------------");
             System.out.println(highestPlayer.getName() + " had the highest card hierarchy and gets a score of 1!");
+            System.out.println("---------------------------------------------------------------------\n");
+
         }
-        System.out.println("Round over. Scores:");
+        System.out.println("\n-------------------------------------------------------------------");
+        System.out.println("|                      ROUND OVER                                   |");
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("Scores after this round:");
         showScore();
+
         int tokensToWin = 7;
         switch(players.size()) {
             case 3:
@@ -238,9 +252,16 @@ public class Game {
                 tokensToWin = 4;
                 break;
         }
+
+        System.out.println("Tokens to Win: " + tokensToWin);
+        System.out.println("--------------------------------------------------------------------\n");
         for (Player player : players) {
             if (player.getScore() >= tokensToWin) {
+                System.out.println("\n-----------------------------------------------------------------");
+                System.out.println("|                         GAME OVER                               |");
+                System.out.println("-------------------------------------------------------------------");
                 System.out.println(player.getName() + " wins the game!");
+                System.out.println("------------------------------------------------------------------\n");
                 System.exit(0);
             }
         }
@@ -261,7 +282,7 @@ public class Game {
     }
 
     public void showHand() {
-        System.out.println("The player " + currentPlayer.getHand() + " hand is :  " + currentPlayer.getHand().getName());
+        System.out.println("The player " + currentPlayer.getName() + " hand is :  " + currentPlayer.getHand().getName());
     }
     /**
      * Main method to start the Love Letter game.

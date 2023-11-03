@@ -28,9 +28,9 @@ public class Baron extends Card {
      */
     @Override
     public void effect(Player currentPlayer, List<Player> allPlayers, Scanner scanner) {
-        System.out.println("\n------------------------------------------------");
-        System.out.println("|                 BARON EFFECT                   |");
-        System.out.println("--------------------------------------------------");
+        System.out.println("\n----------------------------------------------------------");
+        System.out.println("|                      BARON EFFECT                        |");
+        System.out.println("------------------------------------------------------------");
         System.out.println("Which player would you like to compare hands with?");
         System.out.println("(Enter a number 1-" + allPlayers.size() + ")");
 
@@ -47,17 +47,17 @@ public class Baron extends Card {
             int currentPlayerCardValue = hand.getHierarchy();
             int targetPlayerCardValue = targetPlayer.getHand().getHierarchy();
             if (currentPlayerCardValue > targetPlayerCardValue) {
-                System.out.println("You win! " + targetPlayer.getName() + " is out of the round.");
+                System.out.println("You win, since your card hierarchy is bigger ! " + targetPlayer.getName() + " is out of the round.");
                 targetPlayer.setOut(true);
             } else if (currentPlayerCardValue < targetPlayerCardValue) {
-                System.out.println("You lose! You are out of the round.");
+                System.out.println("You lose, since your card hierarchy is smaller ! You are out of the round.");
                 currentPlayer.setOut(true);
             } else {
-                System.out.println("It's a tie! Nothing happens.");
+                System.out.println("It's a tie, because you have the same card hierarchy! Nothing happens.");
             }
         }
         scanner.nextLine();
-        System.out.println("-----------------------------------------------------\n");
+        System.out.println("--------------------------------------------------------------\n");
     }
 
 

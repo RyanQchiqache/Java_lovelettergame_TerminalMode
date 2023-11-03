@@ -25,7 +25,7 @@ public class Princess extends Card {
     @Override
     public void effect(Player currentPlayer, List<Player> allPlayers, Scanner scanner) {
         System.out.println("\n-------------------------------------------------------------------");
-        System.out.println("|                               PRINCE EFFECT                       |");
+        System.out.println("|                               PRINCESS EFFECT                       |");
         System.out.println("---------------------------------------------------------------------");
         System.out.println("You must discard your Princess card. You are out of the round.");
         currentPlayer.setOut(true);
