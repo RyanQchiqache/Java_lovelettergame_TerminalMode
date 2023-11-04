@@ -30,7 +30,7 @@ public class Priest extends Card {
         System.out.println("Which player's card would you like to see? (Enter a number 1-" + allPlayers.size() + ")");
         int playerNum = scanner.nextInt();
         while (playerNum < 1 || playerNum > allPlayers.size() || allPlayers.get(playerNum-1).equals(currentPlayer)) {
-            System.out.println("Invalid player number. Please enter a number 1-" + allPlayers.size() + ".");
+            System.out.println("Invalid player number.");
             playerNum = scanner.nextInt();
         }
         Player targetPlayer = allPlayers.get(playerNum-1);

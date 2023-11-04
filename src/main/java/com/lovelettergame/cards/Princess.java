@@ -27,7 +27,7 @@ public class Princess extends Card {
         System.out.println("\n-------------------------------------------------------------------");
         System.out.println("|                               PRINCESS EFFECT                       |");
         System.out.println("---------------------------------------------------------------------");
-        System.out.println("You must discard your Princess card. You are out of the round.");
+        System.out.println("You are out of the round.");
         currentPlayer.setOut(true);
         scanner.nextLine();
         System.out.println("--------------------------------------------------------------------\n");

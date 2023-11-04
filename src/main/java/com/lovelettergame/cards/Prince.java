@@ -31,7 +31,7 @@ public class Prince extends Card {
         System.out.println("Which player would you like to target? (Enter a number 1-" + allPlayers.size() + ")");
         int playerNum = scanner.nextInt();
         while (playerNum < 1 || playerNum > allPlayers.size()) {
-            System.out.println("Invalid player number. Please enter a number 1-" + allPlayers.size() + ".");
+            System.out.println("Invalid player number.");
             playerNum = scanner.nextInt();
         }
         Player targetPlayer = allPlayers.get(playerNum-1);

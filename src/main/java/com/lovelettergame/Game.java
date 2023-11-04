@@ -9,6 +9,7 @@ import java.util.Scanner;
  */
 public class Game {
 
+    private Boolean gameStarted = false;
     private int numPlayers;
     private List<Player> players;
     private Player currentPlayer;
@@ -53,14 +54,17 @@ public class Game {
         for (int i = 0; i < numPlayers; i++) {
             System.out.print("Enter name for Player " + (i + 1) + ": ");
             String playerName = scanner.nextLine();
-            while (playerName.length() > 21) {
-                System.out.println("Player name should be up to 16 characters. Please try again.");
-                System.out.print("Enter name for Player " + (i + 1) + " (up to 21 characters): ");
+            while (playerName.length() > 21 || playerName.length() < 1) {
+                System.out.println("Player name should be 1 to 21 characters. Please try again.");
+                System.out.print("Enter name for Player " + (i + 1) + " (1 to 21 characters): ");
                 playerName = scanner.nextLine();
             }
             players.add(new Player(playerName, playerID));
             playerID++;
         }
+        gameStarted = true;
+        System.out.println("Game started!");
+
         System.out.println("---------------------------------------------------\n");
 
         explainHowToPlay();
@@ -214,10 +218,10 @@ public class Game {
      * Ends the current round and determines the round winner.
      */
 
-    private void endRound() {
-        // Find player with the highest hierarchy card
+    private Player findPlayerWithHighestCard() {
         Player highestPlayer = null;
         int highestHierarchy = 0;
+
         for (Player player : players) {
             if (!player.isOut()) {
                 int hierarchy = player.getHand().getHierarchy();
@@ -228,23 +232,33 @@ public class Game {
             }
         }
 
-        if (highestPlayer != null) {
-            highestPlayer.addToScore(1);
+        return highestPlayer;
+    }
+
+    private void awardPointsToWinner(Player winner) {
+        if (winner != null) {
+            winner.addToScore(1);
             System.out.println("\n-------------------------------------------------------------------");
             System.out.println("|                       ROUND RESULTS                               |");
             System.out.println("---------------------------------------------------------------------");
-            System.out.println(highestPlayer.getName() + " had the highest card hierarchy and gets a score of 1!");
+            System.out.println(winner.getName() + " had the highest card hierarchy and gets a score of 1!");
             System.out.println("---------------------------------------------------------------------\n");
-
         }
+    }
+
+    private void displayRoundSummary() {
         System.out.println("\n-------------------------------------------------------------------");
         System.out.println("|                      ROUND OVER                                   |");
         System.out.println("---------------------------------------------------------------------");
         System.out.println("Scores after this round:");
         showScore();
+        System.out.println("------------------------------------------------------------------\n");
+
+    }
+    private void checkForGameWinner() {
 
         int tokensToWin = 7;
-        switch(players.size()) {
+        switch (players.size()) {
             case 3:
                 tokensToWin = 5;
                 break;
@@ -265,24 +279,34 @@ public class Game {
                 System.exit(0);
             }
         }
+    }
+    private void resetRound(){
+        deck = new Deck();
+        deck.shuffle();
+
         for (Player player : players) {
             if (player.isOut() ){
                 player.setOut(false);
             }
-        }
-        deck = new Deck();
-        resetPlayerHands();
-    }
-    private void resetPlayerHands() {
-        for (Player player : players) {
-            if (!player.isOut()) {
-                player.setHand(deck.draw());
-            }
+            player.setHand(deck.draw());
         }
     }
 
+    private void endRound (){
+
+        Player highestPlayer = findPlayerWithHighestCard();
+        awardPointsToWinner(highestPlayer);
+        displayRoundSummary();
+        checkForGameWinner();
+        resetRound();
+    }
+
     public void showHand() {
-        System.out.println("The player " + currentPlayer.getName() + " hand is :  " + currentPlayer.getHand().getName());
+        if (gameStarted) {
+            System.out.println("The player " + currentPlayer.getName() + " hand is :  " + currentPlayer.getHand().getName());
+        } else {
+            System.out.println("The game has not started yet.");
+        }
     }
     /**
      * Main method to start the Love Letter game.
