@@ -26,6 +26,7 @@ public class Game {
         numCardsInDeck = deck.size();
 
     }
+
     /**
      * Starts the Love Letter game, allowing players to set up their names and dealing cards to them.
      */
