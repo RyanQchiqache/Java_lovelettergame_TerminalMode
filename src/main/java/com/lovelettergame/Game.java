@@ -234,7 +234,11 @@ public class Game {
 
         return highestPlayer;
     }
-
+    /**
+     * Awards points to the winner of the round based on the highest card hierarchy.
+     *
+     * @param winner The player who had the highest card hierarchy.
+     */
     private void awardPointsToWinner(Player winner) {
         if (winner != null) {
             winner.addToScore(1);
@@ -245,7 +249,9 @@ public class Game {
             System.out.println("---------------------------------------------------------------------\n");
         }
     }
-
+    /**
+     * Displays a summary of the round, including the scores of all players.
+     */
     private void displayRoundSummary() {
         System.out.println("\n-------------------------------------------------------------------");
         System.out.println("|                      ROUND OVER                                   |");
@@ -255,6 +261,10 @@ public class Game {
         System.out.println("------------------------------------------------------------------\n");
 
     }
+    /**
+     * Checks if any player has won the game based on the specified tokens needed to win.
+     * If a player reaches the required score, the game is terminated and the winner is declared.
+     */
     private void checkForGameWinner() {
 
         int tokensToWin = 7;
@@ -280,6 +290,9 @@ public class Game {
             }
         }
     }
+    /**
+     * Resets the round by shuffling the deck and giving each player a new card.
+     */
     private void resetRound(){
         deck = new Deck();
         deck.shuffle();
@@ -291,16 +304,21 @@ public class Game {
             player.setHand(deck.draw());
         }
     }
-
+    /**
+     * Ends the current round by determining the highest card holder, awarding points, displaying the summary,
+     * checking for a game winner, and resetting the round for the next iteration.
+     */
     private void endRound (){
-
         Player highestPlayer = findPlayerWithHighestCard();
         awardPointsToWinner(highestPlayer);
         displayRoundSummary();
         checkForGameWinner();
         resetRound();
     }
-
+    /**
+     * Displays the current player's hand if the game has started.
+     * Otherwise, it notifies that the game has not started yet.
+     */
     public void showHand() {
         if (gameStarted) {
             System.out.println("The player " + currentPlayer.getName() + " hand is :  " + currentPlayer.getHand().getName());
